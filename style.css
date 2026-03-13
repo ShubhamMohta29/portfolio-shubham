@@ -5,6 +5,7 @@ body {
   background: #0f0f0f;
   color: #e0e0e0;
   line-height: 1.6;
+  margin: 0;
 }
 
 nav {
@@ -63,3 +64,11 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; color: #fff; }
 
 #contact { text-align: center; }
 #contact a { color: #6c63ff; }
+
+#particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  pointer-events: none;
+}
