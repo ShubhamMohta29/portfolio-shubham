@@ -22,11 +22,11 @@ function initParticles() {
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  pts.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+  pts.forEach(dot => {
+    dot.x += dot.vx;
+    dot.y += dot.vy;
+    if (dot.x < 0 || dot.x > canvas.width) dot.vx *= -1;
+    if (dot.y < 0 || dot.y > canvas.height) dot.vy *= -1;
   });
 
   pts.forEach((a, i) => {
@@ -44,7 +44,7 @@ function draw() {
 
     ctx.fillStyle = '#6c63ff';
     ctx.beginPath();
-    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+    ctx.arc(a.x, a.y, 2, 0, Math.PI * 2);
     ctx.fill();
   });
 
