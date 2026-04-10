@@ -72,3 +72,25 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; color: #fff; }
   z-index: -1;
   pointer-events: none;
 }
+.about-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.profile-pic {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #your-accent-color; /* match your theme */
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .about-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
