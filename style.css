@@ -51,7 +51,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; color: #fff; }
   font-size: 0.9rem;
 }
 
-.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.project-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
 .card {
   background: #1a1a1a;
   border: 1px solid #2a2a2a;
