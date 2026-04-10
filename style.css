@@ -84,7 +84,7 @@ h2 { font-size: 2rem; margin-bottom: 1.5rem; color: #fff; }
   height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #your-accent-color; /* match your theme */
+  border: 3px solid #6c63ff;
   flex-shrink: 0;
 }
 
