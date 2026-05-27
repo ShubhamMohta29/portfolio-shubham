@@ -140,7 +140,7 @@ galaxySceneGroup.add(galaxy);
 // 4c. Background stars — added to scene (not galaxySceneGroup) so they stay
 //     visible in stellar views, giving the feeling of being inside the galaxy
 {
-  const N=5000, pos=new Float32Array(N*3);
+  const N=12000, pos=new Float32Array(N*3);
   for (let i=0;i<N;i++){
     const r=600+Math.random()*900, th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1);
     pos[i*3]=r*Math.sin(ph)*Math.cos(th); pos[i*3+1]=r*Math.sin(ph)*Math.sin(th); pos[i*3+2]=r*Math.cos(ph);
