@@ -8,121 +8,56 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
+  <script type="importmap">
+    { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
+  </script>
 </head>
-<body>
+<body class="galaxy-view">
 
-  <div class="layout">
+  <canvas id="bg"></canvas>
 
-    <!-- LEFT: fixed panel -->
-    <aside class="left-panel">
+  <!-- Fade-to-black overlay for scene transitions -->
+  <div id="overlay"></div>
 
-      <nav>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <div class="left-content">
-        <img src="profile.jpg" alt="Shubham Mohta" class="profile-pic" />
-        <p class="hero-eyebrow">CS, Astrophysics &amp; Math · UofT</p>
-        <h1>Building things<br>that work.</h1>
-        <p class="hero-sub">2nd year student passionate about AI systems, algorithms, and the occasional star.</p>
-
-        <div class="skills">
-          <span>Python</span>
-          <span>Java</span>
-          <span>React</span>
-          <span>AI Systems</span>
-          <span>Git</span>
-        </div>
-      </div>
-
-      <div class="contact-links">
-        <a class="contact-link" href="mailto:shubham.mohta.2995@gmail.com">
-          <span class="contact-link-label"><strong>Email</strong></span>
-          &nbsp shubham.mohta.2995@gmail.com
-        </a>
-        <a class="contact-link" href="https://github.com/shubhammohta29" target="_blank">
-          <span class="contact-link-label"><strong>GitHub</strong></span>
-          &nbsp shubhammohta29
-        </a>
-        <a class="contact-link" href="https://www.linkedin.com/in/shubham-mohta-9902a2260/" target="_blank">
-          <span class="contact-link-label"><strong>LinkedIn</strong></span>
-          &nbsp shubham-mohta
-        </a>
-      </div>
-
-    </aside>
-
-    <!-- RIGHT: scrollable panel -->
-    <main class="right-panel">
-
-      <section id="about">
-        <p class="section-label">About</p>
-        <p class="about-text">I'm a 2nd year CS and Astrophysics double major at the University of Toronto. I love solving hard problems, building tools that do useful things, and learning whatever's next.</p>
-      </section>
-
-      <section id="projects">
-        <p class="section-label">Projects</p>
-        <div class="project-list">
-
-          <a class="project-item" href="https://github.com/ShubhamMohta29/sudoku-solver" target="_blank">
-            <div>
-              <p class="project-meta">Python</p>
-              <p class="project-title">Sudoku Solver</p>
-              <p class="project-desc">Backtracking solver with constraint propagation and MRV heuristic — significantly faster than naive approaches on real puzzles.</p>
-            </div>
-            <span class="project-arrow">↗</span>
-          </a>
-
-          <a class="project-item" href="https://github.com/ShubhamMohta29/portfolio-shubham.git" target="_blank">
-            <div>
-              <p class="project-meta">JavaScript · HTML · CSS</p>
-              <p class="project-title">Portfolio</p>
-              <p class="project-desc">Designed and built from scratch. Animated particle network background via HTML5 Canvas API, smooth scrolling, responsive layout — no frameworks.</p>
-            </div>
-            <span class="project-arrow">↗</span>
-          </a>
-
-          <a class="project-item" href="https://github.com/ShubhamMohta29/HADES.git" target="_blank">
-            <div>
-              <p class="project-meta">Python · Tkinter · GROQ AI</p>
-              <p class="project-title">H.A.D.E.S.</p>
-              <p class="project-desc">Human Assistance and Decision Engine System — a fully voice-activated AI assistant inspired by JARVIS, built in Python.</p>
-            </div>
-            <span class="project-arrow">↗</span>
-          </a>
-
-          <a class="project-item" href="https://github.com/ShubhamMohta29/GenAI-Hackathon.git" target="_blank">
-            <div>
-              <p class="project-meta">Python · React · FastAPI · PaySim</p>
-              <p class="project-title">Argus</p>
-              <p class="project-desc">Real-time Anti-Money Laundering platform using a Graph Neural Network and Gemini AI. Scores 9M accounts for fraud risk and auto-generates Suspicious Activity Reports.</p>
-            </div>
-            <span class="project-arrow">↗</span>
-          </a>
-
-          <a class="project-item" href="https://github.com/ShubhamMohta29/AnimalEncyclopedia.git" target="_blank">
-            <div>
-              <p class="project-meta">Java · Swing · REST APIs</p>
-              <p class="project-title">Animal Encyclopedia</p>
-              <p class="project-desc">Desktop encyclopedia built with a team of 6. Led the search backend (entity parsing, API client, Clean Architecture interactor chain) and built several Swing UI screens.</p>
-            </div>
-            <span class="project-arrow">↗</span>
-          </a>
-
-        </div>
-      </section>
-
-      <section id="contact">
-        <p class="section-label">Contact</p>
-        <p class="contact-text">Open to internships, collaborations, and interesting problems.</p>
-        <p class="project-desc">Details on the bottom left!</p>
-      </section>
-
-    </main>
-
+  <!-- ── Galaxy home ── -->
+  <div class="home-hero" id="home-hero">
+    <p class="home-eyebrow">CS · Astrophysics · Math · UofT</p>
+    <h1>Shubham Mohta</h1>
+    <p class="home-sub">Building things that work.</p>
+    <p class="home-hint">navigate the stars</p>
   </div>
 
+  <!-- Nav star labels (JS positions these each frame) -->
+  <div class="star-label" id="label-about"    data-page="about">About</div>
+  <div class="star-label" id="label-projects" data-page="projects">Projects</div>
+  <div class="star-label" id="label-contact"  data-page="contact">Contact</div>
+  <div class="star-label" id="label-resume"   data-page="resume">Résumé</div>
+
+  <!-- ── Stellar system HUD ── -->
+  <button class="stellar-back" id="stellar-back">← galaxy</button>
+  <p class="stellar-title"    id="stellar-title"></p>
+  <p class="stellar-hint">click a planet to explore</p>
+
+  <!-- Planet labels (created dynamically by JS) -->
+  <div id="planet-labels"></div>
+
+  <!-- ── Planet detail bottom sheet ── -->
+  <div class="planet-sheet" id="planet-sheet">
+    <div class="planet-sheet-inner">
+      <button class="sheet-close" id="sheet-close">✕</button>
+      <div id="sheet-content"></div>
+    </div>
+  </div>
+
+  <!-- ── PDF viewer modal ── -->
+  <div id="pdf-modal">
+    <div class="pdf-modal-bar">
+      <span>Résumé</span>
+      <button id="pdf-close">✕</button>
+    </div>
+    <iframe id="pdf-frame" src="" title="Résumé PDF"></iframe>
+  </div>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>

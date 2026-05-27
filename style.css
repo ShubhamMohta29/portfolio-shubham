@@ -1,15 +1,12 @@
 :root {
-  --ink: #1a1a18;
-  --ink-2: #5a5a56;
-  --ink-3: #9a9a94;
-  --surface: #f5f3ee;
-  --surface-2: #eceae3;
-  --accent: #c84b2f;
-  --border: rgba(26,26,24,0.12);
+  --ink:     #f0ede6;
+  --ink-2:   #aeaaa2;
+  --ink-3:   #66635c;
+  --accent:  #e05535;
+  --border:  rgba(255, 255, 255, 0.08);
   --font-display: 'DM Serif Display', serif;
-  --font-body: 'Instrument Sans', sans-serif;
-  --font-mono: 'DM Mono', monospace;
-  --left-width: 340px;
+  --font-body:    'Instrument Sans', sans-serif;
+  --font-mono:    'DM Mono', monospace;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -17,242 +14,371 @@
 html, body {
   height: 100%;
   font-family: var(--font-body);
-  background: var(--surface);
+  background: #000;
   color: var(--ink);
   font-size: 15px;
   line-height: 1.7;
-}
-
-/* ── Split layout ── */
-.layout {
-  display: flex;
-  height: 100vh;
-}
-
-/* ── Left panel ── */
-.left-panel {
-  width: var(--left-width);
-  flex-shrink: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  padding: 2.5rem 2rem;
-  border-right: 1px solid var(--border);
   overflow: hidden;
 }
 
-nav {
+/* ── Canvas ── */
+#bg {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  display: block;
+}
+
+/* ── Transition overlay ── */
+#overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  background: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+}
+#overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Home hero ── */
+.home-hero {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
   display: flex;
-  gap: 1.25rem;
-  margin-bottom: 2.5rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
+body.stellar-view .home-hero { opacity: 0; pointer-events: none; }
 
-nav a {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-3);
-  text-decoration: none;
-}
-nav a:hover { color: var(--accent); }
-
-.left-content {
-  flex: 1;
-}
-
-.profile-pic {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  object-fit: cover;
-  filter: grayscale(20%);
-  margin-bottom: 1.5rem;
-}
-
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--accent);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-bottom: 0.75rem;
-}
-
-h1 {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 1.1;
-  color: var(--ink);
-  margin-bottom: 1rem;
-  font-weight: 400;
-}
-
-.hero-sub {
-  font-size: 14px;
-  color: var(--ink-2);
-  line-height: 1.65;
-  margin-bottom: 1.75rem;
-}
-
-.skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.skills span {
+.home-eyebrow {
   font-family: var(--font-mono);
   font-size: 10px;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.1rem;
+}
+
+.home-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 6vw, 4.4rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 80px rgba(90, 150, 255, 0.4), 0 2px 30px rgba(0, 0, 0, 1);
+}
+
+.home-sub {
+  font-size: 15px;
   color: var(--ink-2);
-  background: var(--surface-2);
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border);
 }
 
-/* ── Contact links in left panel ── */
-.contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
-}
-
-.contact-link {
+.home-hint {
+  position: absolute;
+  bottom: 2.8rem;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
   color: var(--ink-3);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  animation: floathint 3.2s ease-in-out infinite;
 }
-.contact-link:hover { color: var(--accent); }
+@keyframes floathint {
+  0%, 100% { transform: translateY(0);   opacity: 0.45; }
+  50%       { transform: translateY(-6px); opacity: 0.9; }
+}
 
-.contact-link-label {
+/* ── Galaxy nav star labels ── */
+.star-label {
+  position: fixed;
+  z-index: 20;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(180, 210, 255, 0.55);
+  background: rgba(0, 4, 12, 0.6);
+  border: 1px solid rgba(180, 210, 255, 0.18);
+  padding: 3px 9px;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 14px));
+  transition: color 0.2s, border-color 0.2s, background 0.2s, opacity 0.3s;
+  user-select: none;
+}
+.star-label::after {
+  content: '';
+  position: absolute;
+  bottom: -9px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 9px;
+  background: rgba(180, 210, 255, 0.25);
+}
+.star-label:hover,
+.star-label.hovered {
+  color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(180, 210, 255, 0.55);
+  background: rgba(0, 4, 12, 0.88);
+}
+body.stellar-view .star-label { opacity: 0; pointer-events: none; }
+
+/* ── Stellar system HUD ── */
+.stellar-back {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 80;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(180, 210, 255, 0.45);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: color 0.2s, opacity 0.4s;
+}
+.stellar-back:hover { color: var(--accent); }
+body.stellar-view .stellar-back { opacity: 1; pointer-events: auto; }
+
+.stellar-title {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(180, 210, 255, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  white-space: nowrap;
+}
+body.stellar-view .stellar-title { opacity: 1; }
+
+.stellar-hint {
+  position: fixed;
+  bottom: 2.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(180, 210, 255, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  white-space: nowrap;
+}
+body.stellar-view .stellar-hint  { opacity: 1; animation: floathint 3.2s ease-in-out infinite; }
+body.sheet-open  .stellar-hint  { opacity: 0 !important; }
+
+/* ── Planet labels ── */
+.planet-label {
+  position: fixed;
+  z-index: 20;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(210, 225, 255, 0.55);
+  background: rgba(0, 4, 12, 0.65);
+  border: 1px solid rgba(180, 210, 255, 0.14);
+  padding: 3px 8px;
+  white-space: nowrap;
+  transform: translate(-50%, calc(-100% - 10px));
+  transition: color 0.2s, border-color 0.2s;
+  user-select: none;
+  pointer-events: auto;
+}
+.planet-label::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 8px;
+  background: rgba(180, 210, 255, 0.18);
+}
+.planet-label.hovered {
+  color: rgba(255, 255, 255, 0.95);
+  border-color: rgba(180, 210, 255, 0.5);
+}
+body.galaxy-view #planet-labels { display: none; }
+
+/* ── Planet bottom sheet ── */
+.planet-sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: rgba(0, 4, 14, 0.96);
+  -webkit-backdrop-filter: blur(28px) saturate(1.1);
+  backdrop-filter: blur(28px) saturate(1.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  transform: translateY(100%);
+  transition: transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
+  max-height: 55vh;
+  overflow-y: auto;
+}
+.planet-sheet.active { transform: translateY(0); }
+.planet-sheet::-webkit-scrollbar { width: 3px; }
+.planet-sheet::-webkit-scrollbar-track { background: transparent; }
+.planet-sheet::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+
+.planet-sheet-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 2rem 2.5rem;
+  position: relative;
+}
+
+.sheet-close {
+  position: absolute;
+  top: 1.8rem;
+  right: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.sheet-close:hover { color: var(--accent); }
+
+.sheet-meta {
+  font-family: var(--font-mono);
   font-size: 10px;
   color: var(--ink-3);
   letter-spacing: 0.06em;
-  text-transform: uppercase;
-  width: 44px;
-  flex-shrink: 0;
+  margin-bottom: 0.4rem;
 }
-
-/* ── Right panel ── */
-.right-panel {
-  margin-left: var(--left-width);
-  flex: 1;
-  height: 100vh;
-  overflow-y: auto;
-  padding: 2.5rem 3rem 6rem;
-}
-
-section {
-  margin-bottom: 4rem;
-}
-
-/* ── Section label ── */
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--border);
-}
-
-/* ── About ── */
-.about-text {
-  font-size: 15px;
-  color: var(--ink-2);
-  line-height: 1.75;
-  /* max-width: 480px; */
-}
-
-/* ── Projects ── */
-.project-list { display: flex; flex-direction: column; }
-
-.project-item {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: start;
-  gap: 1rem;
-  padding: 1.4rem 0;
-  border-bottom: 1px solid var(--border);
-  text-decoration: none;
-  color: inherit;
-}
-.project-item:first-child { border-top: 1px solid var(--border); }
-.project-item:hover .project-title { color: var(--accent); }
-
-.project-meta {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--ink-3);
-  letter-spacing: 0.04em;
-  margin-bottom: 0.35rem;
-}
-
-.project-title {
+.sheet-title {
   font-family: var(--font-display);
-  font-size: 1.2rem;
+  font-size: 1.55rem;
   font-weight: 400;
   color: var(--ink);
-  margin-bottom: 0.4rem;
-  transition: color 0.15s;
+  margin-bottom: 0.9rem;
 }
-
-.project-desc {
+.sheet-body {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.72;
+  margin-bottom: 1.5rem;
+  white-space: pre-line;
+}
+.sheet-value {
+  font-family: var(--font-mono);
   font-size: 13px;
   color: var(--ink-2);
-  line-height: 1.6;
+  margin-bottom: 1.4rem;
 }
+.sheet-link {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid rgba(224, 85, 53, 0.38);
+  padding: 0.5rem 1.1rem;
+  transition: background 0.2s;
+}
+.sheet-link:hover { background: rgba(224, 85, 53, 0.1); }
 
-.project-arrow {
-  font-size: 16px;
+.sheet-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.sheet-skills span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
   color: var(--ink-3);
-  padding-top: 0.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.22rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* ── PDF viewer modal ── */
+#pdf-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0, 4, 14, 0.97);
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+#pdf-modal.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.pdf-modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
   flex-shrink: 0;
-  transition: color 0.15s;
 }
-.project-item:hover .project-arrow { color: var(--accent); }
-
-/* ── Contact section (right) ── */
-.contact-text {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--ink);
-  line-height: 1.3;
+#pdf-close {
+  background: none;
+  border: none;
+  color: var(--ink-3);
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+#pdf-close:hover { color: var(--accent); }
+#pdf-frame {
+  flex: 1;
+  border: none;
+  min-height: 0;
 }
 
-/* ── Responsive: collapse to single column on mobile ── */
-@media (max-width: 700px) {
-  .layout { flex-direction: column; height: auto; }
+/* Overlay fast-flash variant used during zoom transition */
+#overlay.fast { transition: opacity 0.18s ease; }
 
-  .left-panel {
-    position: relative;
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-    padding: 1.5rem;
-  }
-
-  .right-panel {
-    margin-left: 0;
-    height: auto;
-    overflow-y: visible;
-    padding: 1.5rem 1.5rem 4rem;
-  }
+/* ── Responsive ── */
+@media (max-width: 560px) {
+  .planet-sheet { max-height: 65vh; }
+  .planet-sheet-inner { padding: 1.5rem 1.25rem 2rem; }
+  .sheet-title { font-size: 1.25rem; }
 }
