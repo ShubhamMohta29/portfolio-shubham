@@ -78,7 +78,7 @@ scene.add(galaxySceneGroup);
 // 4a. Galaxy arms, core, halo
 const galaxy = new THREE.Group();
 {
-  const ARMS=2, ARM_N=2800, CORE_N=1000, HALO_N=700, MAX_R=110, WINDINGS=2.2;
+  const ARMS=2, ARM_N=4600, CORE_N=1380, HALO_N=1050, MAX_R=110, WINDINGS=2.2;
   const total = ARMS*ARM_N + CORE_N + HALO_N;
   const pos = new Float32Array(total*3), col = new Float32Array(total*3);
   let i = 0;
@@ -108,7 +108,7 @@ const galaxy = new THREE.Group();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
   galaxy.add(new THREE.Points(geo, new THREE.PointsMaterial({
-    size:0.6, map:starTex, transparent:true, blending:THREE.AdditiveBlending,
+    size:1.0, map:starTex, transparent:true, blending:THREE.AdditiveBlending,
     depthWrite:false, vertexColors:true, sizeAttenuation:true,
   })));
   const core = new THREE.Sprite(new THREE.SpriteMaterial({
@@ -119,10 +119,10 @@ const galaxy = new THREE.Group();
 
 // 4b. Nav stars (children of galaxy — they rotate with it)
 const NAV_DEFS = [
-  { page:'about',    pos:[ 55, 6,  10], color:0xaaccff },
-  { page:'projects', pos:[-10, 6,  60], color:0xffccaa },
-  { page:'contact',  pos:[-58, 6, -15], color:0xaaffd4 },
-  { page:'resume',   pos:[ 15, 6, -62], color:0xddaaff },
+  { page:'about',    pos:[ 88, 5,  14], color:0xaaccff },
+  { page:'projects', pos:[-12, 5,  92], color:0xffccaa },
+  { page:'contact',  pos:[-90, 5, -10], color:0xaaffd4 },
+  { page:'resume',   pos:[ 10, 5, -88], color:0xddaaff },
 ];
 const navSprites=[], navHitMeshes=[];
 const _hitGeo = new THREE.SphereGeometry(10,6,6);
@@ -147,28 +147,60 @@ galaxySceneGroup.add(galaxy);
   }
   const geo = new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(pos,3));
   scene.add(new THREE.Points(geo, new THREE.PointsMaterial({
-    size:1.0, map:starTex, transparent:true, blending:THREE.AdditiveBlending,
-    depthWrite:false, color:0x7788bb, sizeAttenuation:true,
+    size:1.8, map:starTex, transparent:true, blending:THREE.AdditiveBlending,
+    depthWrite:false, color:0x99aabb, sizeAttenuation:true,
   })));
 }
 
-// 4d. Nebulas (galaxy-only — part of galaxySceneGroup)
-function makeNebulaTex(r,g,b) {
-  const s=256, c=document.createElement('canvas'); c.width=c.height=s;
-  const ctx=c.getContext('2d');
-  for(let i=0;i<3;i++){
-    const ox=s/2+(Math.random()-0.5)*s*0.2, oy=s/2+(Math.random()-0.5)*s*0.2;
-    const gr=ctx.createRadialGradient(ox,oy,0,s/2,s/2,s*0.5);
-    gr.addColorStop(0,`rgba(${r},${g},${b},0.15)`); gr.addColorStop(0.5,`rgba(${r},${g},${b},0.05)`); gr.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=gr; ctx.fillRect(0,0,s,s);
-  }
-  return new THREE.CanvasTexture(c);
+// 4d. Distant mini-galaxies — purely decorative, scattered far beyond the main galaxy
+function makeDistantGalaxyTex(r, g, b, aspect, angle) {
+  const s = 64, cv = document.createElement('canvas');
+  cv.width = cv.height = s;
+  const ctx = cv.getContext('2d');
+  ctx.save();
+  ctx.translate(s/2, s/2);
+  ctx.rotate(angle);
+  ctx.scale(1, aspect);
+  const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, s * 0.48);
+  grad.addColorStop(0,    `rgba(${r},${g},${b},1)`);
+  grad.addColorStop(0.07, `rgba(${r},${g},${b},0.75)`);
+  grad.addColorStop(0.22, `rgba(${r},${g},${b},0.28)`);
+  grad.addColorStop(0.52, `rgba(${r},${g},${b},0.07)`);
+  grad.addColorStop(1,    'rgba(0,0,0,0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath(); ctx.arc(0, 0, s * 0.48, 0, Math.PI * 2); ctx.fill();
+  ctx.restore();
+  return new THREE.CanvasTexture(cv);
 }
-[{r:70,g:100,b:255,x:-200,y:70,z:-80,s:500},{r:160,g:50,b:220,x:220,y:-60,z:-120,s:550},{r:30,g:140,b:220,x:80,y:130,z:-100,s:420}]
-.forEach(({r,g,b,x,y,z,s})=>{
-  const sp=new THREE.Sprite(new THREE.SpriteMaterial({map:makeNebulaTex(r,g,b),transparent:true,blending:THREE.AdditiveBlending,depthWrite:false}));
-  sp.position.set(x,y,z); sp.scale.set(s,s,1); galaxySceneGroup.add(sp);
-});
+{
+  const GCOLS = [
+    [255,242,210], // warm white  — old spiral
+    [200,218,255], // blue-white  — young spiral
+    [255,225,185], // amber       — elliptical
+    [215,200,255], // lavender    — irregular
+    [245,255,250], // cool white  — lenticular
+  ];
+  for (let i = 0; i < 45; i++) {
+    const col    = GCOLS[i % GCOLS.length];
+    const aRatio = 0.22 + Math.random() * 0.58;
+    const sp     = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: makeDistantGalaxyTex(col[0], col[1], col[2], aRatio, Math.random() * Math.PI),
+      transparent: true, blending: THREE.AdditiveBlending,
+      depthWrite: false, opacity: 0.40 + Math.random() * 0.35,
+    }));
+    const dist = 700 + Math.random() * 700;
+    const th   = Math.random() * Math.PI * 2;
+    const ph   = Math.acos(2 * Math.random() - 1);
+    sp.position.set(
+      dist * Math.sin(ph) * Math.cos(th),
+      dist * Math.sin(ph) * Math.sin(th),
+      dist * Math.cos(ph)
+    );
+    const sz = 60 + Math.random() * 70;
+    sp.scale.set(sz, sz * aRatio, 1);
+    scene.add(sp);
+  }
+}
 
 // ── 5. Stellar system data ────────────────────────────────────────────────────
 const SYSTEMS = {
@@ -248,8 +280,8 @@ function buildStellarSystem(id) {
   const sys = SYSTEMS[id];
   const group = new THREE.Group();
 
-  group.add(new THREE.AmbientLight(0x111133, 0.45));
-  group.add(new THREE.PointLight(sys.starColor, 2.8, 350));
+  group.add(new THREE.AmbientLight(0x223355, 0.75));
+  group.add(new THREE.PointLight(sys.starColor, 5.0, 400));
 
   const starMesh = new THREE.Mesh(
     new THREE.SphereGeometry(sys.starRadius, 32, 32),
@@ -284,8 +316,8 @@ function buildStellarSystem(id) {
     const pMesh = new THREE.Mesh(
       new THREE.SphereGeometry(pd.radius, 28, 28),
       new THREE.MeshStandardMaterial({
-        color: pd.color, emissive: pd.color, emissiveIntensity: 0.15,
-        roughness: 0.78, metalness: 0.08,
+        color: pd.color, emissive: pd.color, emissiveIntensity: 0.55,
+        roughness: 0.65, metalness: 0.12,
       })
     );
     pMesh.position.set(Math.cos(pd.startAngle)*pd.orbitR, 0, Math.sin(pd.startAngle)*pd.orbitR);
@@ -300,7 +332,7 @@ function buildStellarSystem(id) {
       ]),
       transparent:true, blending:THREE.AdditiveBlending, depthWrite:false,
     }));
-    atmSprite.scale.setScalar(pd.radius * 3.8);
+    atmSprite.scale.setScalar(pd.radius * 5.5);
     pMesh.add(atmSprite);
 
     if (pd.hasRings) {
@@ -389,8 +421,17 @@ async function goToSystem(id) {
 
   galaxySceneGroup.visible = false;
   document.body.classList.replace('galaxy-view', 'stellar-view');
-  if (currentSys) scene.remove(currentSys.group);
 
+  if (id === 'about') {
+    document.body.classList.add('about-view');
+    document.getElementById('about-page').classList.add('active');
+    overlay.classList.remove('fast', 'visible');
+    await sleep(60);
+    viewState = 'stellar';
+    return;
+  }
+
+  if (currentSys) scene.remove(currentSys.group);
   currentSys = buildStellarSystem(id);
   scene.add(currentSys.group);
   createPlanetLabels(currentSys.planetObjs);
@@ -410,8 +451,31 @@ async function goToGalaxy() {
   viewState = 'transition';
   closePlanetSheet();
   closePDFModal();
+
+  // Close about page if it was open
+  document.getElementById('about-page').classList.remove('active');
+  document.body.classList.remove('about-view');
+
+  // Zoom out briefly before fading — only when a stellar system is active
+  if (currentSys) {
+    const camR     = currentSys.sys.camRadius;
+    const thetaRef = clock.getElapsedTime() * 0.008 + smoothMX * 0.35;
+    const phiRef   = Math.max(0.55, Math.min(1.32, BASE_PHI + smoothMY * 0.3));
+    const ZOOM_MS  = 350;
+    const t0       = performance.now();
+
+    await new Promise(resolve => {
+      (function tick() {
+        const p = Math.min((performance.now() - t0) / ZOOM_MS, 1);
+        const e = p * p;
+        positionCamera(thetaRef + p * 0.06, phiRef, camR * (1 + e * 2.0));
+        if (p < 1) requestAnimationFrame(tick); else resolve();
+      })();
+    });
+  }
+
   overlay.classList.add('visible');
-  await sleep(550);
+  await sleep(480);
 
   if (currentSys) { scene.remove(currentSys.group); currentSys = null; }
   clearPlanetLabels();
@@ -513,7 +577,7 @@ function updateNavLabels(t) {
     sp.getWorldPosition(_wp);
     projectLabel(_wp, label);
     label.classList.toggle('hovered', hoveredNavIdx===i);
-    const base  = hoveredNavIdx===i ? 13 : 9;
+    const base  = hoveredNavIdx===i ? 22 : 15;
     const pulse = 1 + 0.18*Math.sin(t*1.8+i*1.2);
     sp.scale.setScalar(base*pulse);
   });
@@ -571,7 +635,7 @@ function updatePlanetHover() {
     const tScale = 1.0 + hov*0.28;
     p.mesh.scale.x += (tScale - p.mesh.scale.x) * 0.12;
     p.mesh.scale.y = p.mesh.scale.z = p.mesh.scale.x;
-    p.mesh.material.emissiveIntensity += ((0.15 + hov*0.45) - p.mesh.material.emissiveIntensity) * 0.12;
+    p.mesh.material.emissiveIntensity += ((0.55 + hov*0.40) - p.mesh.material.emissiveIntensity) * 0.12;
   });
 }
 

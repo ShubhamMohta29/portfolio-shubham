@@ -328,6 +328,84 @@ body.galaxy-view #planet-labels { display: none; }
   border: 1px solid rgba(255, 255, 255, 0.09);
 }
 
+/* ── About page ── */
+#about-page {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+#about-page.active {
+  opacity: 1;
+  pointer-events: all;
+}
+.about-inner {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  max-width: 800px;
+  width: 100%;
+}
+.about-photo {
+  width: 210px;
+  height: 210px;
+  min-width: 210px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid rgba(180, 210, 255, 0.15);
+  box-shadow: 0 0 60px rgba(100, 150, 255, 0.14), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.about-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.7rem;
+}
+.about-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+}
+.about-bio {
+  font-size: 14.5px;
+  color: var(--ink-2);
+  line-height: 1.78;
+  margin-bottom: 1.4rem;
+}
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.about-tags span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0.22rem 0.6rem;
+}
+body.about-view .stellar-title { display: none; }
+body.about-view .stellar-hint  { opacity: 0 !important; }
+body.about-view .stellar-back  { z-index: 400; }
+@media (max-width: 600px) {
+  .about-inner { flex-direction: column; text-align: center; gap: 1.8rem; }
+  .about-photo { width: 150px; height: 150px; min-width: 150px; }
+  .about-tags  { justify-content: center; }
+}
+
 /* ── PDF viewer modal ── */
 #pdf-modal {
   position: fixed;
