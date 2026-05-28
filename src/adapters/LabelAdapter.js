@@ -50,6 +50,24 @@ export function clearPlanetLabels() {
   document.getElementById('planet-labels').innerHTML = '';
 }
 
+export function createPlanetSidebar(planetObjs, onPlanetClick) {
+  const sidebar = document.getElementById('planet-sidebar');
+  sidebar.innerHTML = '';
+  planetObjs.forEach(p => {
+    const btn = document.createElement('button');
+    btn.className = 'sidebar-item';
+    const hex = '#' + p.data.color.toString(16).padStart(6, '0');
+    btn.innerHTML = `<span class="sidebar-dot" style="background:${hex}"></span><span class="sidebar-name">${p.data.name}</span>`;
+    btn.addEventListener('click', () => onPlanetClick(p.data));
+    sidebar.appendChild(btn);
+  });
+}
+
+export function clearPlanetSidebar() {
+  const sidebar = document.getElementById('planet-sidebar');
+  if (sidebar) sidebar.innerHTML = '';
+}
+
 export function updatePlanetLabels(currentSys, hoveredPlanetIdx, camera) {
   if (!currentSys) return;
   currentSys.planetObjs.forEach((p, i) => {

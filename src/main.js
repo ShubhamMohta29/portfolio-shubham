@@ -27,6 +27,7 @@ const overlay       = document.getElementById('overlay');
 const stellarTitle  = document.getElementById('stellar-title');
 const planetSheet   = document.getElementById('planet-sheet');
 const sheetContent  = document.getElementById('sheet-content');
+const sheetBackdrop = document.getElementById('sheet-backdrop');
 const pdfModal      = document.getElementById('pdf-modal');
 const pdfFrame      = document.getElementById('pdf-frame');
 
@@ -82,7 +83,7 @@ const navigationUseCase = new NavigationUseCase({
 });
 
 const planetInteractionUseCase = new PlanetInteractionUseCase({
-  planetSheet, sheetContent, pdfModal, pdfFrame,
+  planetSheet, sheetContent, sheetBackdrop, pdfModal, pdfFrame,
 });
 
 navigationUseCase.setOnPlanetClick(pd => planetInteractionUseCase.openPlanetSheet(pd));
@@ -105,11 +106,16 @@ setupResizeHandler(camera, renderer);
 
 // ── UI button wiring ──────────────────────────────────────────────────────────
 document.getElementById('stellar-back').addEventListener('click', () => {
+  planetInteractionUseCase.closePDF();
   planetInteractionUseCase.closePlanetSheet();
   navigationUseCase.goToGalaxy();
 });
 
 document.getElementById('sheet-close').addEventListener('click', () => {
+  planetInteractionUseCase.closePlanetSheet();
+});
+
+sheetBackdrop.addEventListener('click', () => {
   planetInteractionUseCase.closePlanetSheet();
 });
 

@@ -75,6 +75,7 @@ export class NavigationUseCase {
     if (sys?.viewType === 'page') {
       document.body.classList.add(`${id}-view`);
       document.getElementById(`${id}-page`)?.classList.add('active');
+      this.#labelAdapter.clearPlanetSidebar();
       this.#overlay.classList.remove('fast', 'visible');
       await sleep(60);
       this.#viewState = 'stellar';
@@ -85,6 +86,10 @@ export class NavigationUseCase {
     this.#currentSys = this.#stellarSystemBuilder(id);
     this.#scene.add(this.#currentSys.group);
     this.#labelAdapter.createPlanetLabels(
+      this.#currentSys.planetObjs,
+      pd => this.#onPlanetClick?.(pd),
+    );
+    this.#labelAdapter.createPlanetSidebar(
       this.#currentSys.planetObjs,
       pd => this.#onPlanetClick?.(pd),
     );
@@ -131,6 +136,7 @@ export class NavigationUseCase {
 
     if (this.#currentSys) { this.#scene.remove(this.#currentSys.group); this.#currentSys = null; }
     this.#labelAdapter.clearPlanetLabels();
+    this.#labelAdapter.clearPlanetSidebar();
 
     document.body.classList.replace('stellar-view', 'galaxy-view');
     this.#galaxySceneGroup.visible = true;

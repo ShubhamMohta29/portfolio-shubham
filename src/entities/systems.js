@@ -35,7 +35,7 @@ export const SYSTEMS = {
     title: 'Projects', starColor: 0x99ccff, glowColor: 0x5588ee, starRadius: 8, camRadius: 170,
     planets: [
       {
-        name: 'Sudoku Solver', color: 0xb8a898, radius: 2.8, orbitR: 30, orbitSpeed: 0.50, startAngle: 0,
+        name: 'Sudoku Solver', color: 0xb8a898, radius: 2.8, orbitR: 30, orbitSpeed: 0.18, startAngle: 0,
         content: {
           type: 'project', heading: 'Sudoku Solver', meta: 'Python',
           body: 'Backtracking solver with constraint propagation and MRV heuristic — significantly faster than naive approaches on real puzzles.',
@@ -43,7 +43,7 @@ export const SYSTEMS = {
         },
       },
       {
-        name: 'Portfolio', color: 0x3a8fd4, radius: 2.5, orbitR: 46, orbitSpeed: 0.36, startAngle: Math.PI * 0.4,
+        name: 'Portfolio', color: 0x3a8fd4, radius: 2.5, orbitR: 46, orbitSpeed: 0.13, startAngle: Math.PI * 0.4,
         content: {
           type: 'project', heading: 'Portfolio', meta: 'JavaScript · HTML · CSS · Three.js',
           body: 'Designed and built from scratch. 3D spiral galaxy background, interactive stellar navigation system where each section is its own planetary system.',
@@ -51,7 +51,7 @@ export const SYSTEMS = {
         },
       },
       {
-        name: 'H.A.D.E.S.', color: 0xd44a2a, radius: 3.0, orbitR: 62, orbitSpeed: 0.27, startAngle: Math.PI * 0.9,
+        name: 'H.A.D.E.S.', color: 0xd44a2a, radius: 3.0, orbitR: 62, orbitSpeed: 0.10, startAngle: Math.PI * 0.9,
         content: {
           type: 'project', heading: 'H.A.D.E.S.', meta: 'Python · Tkinter · GROQ AI',
           body: 'Human Assistance and Decision Engine System — a fully voice-activated AI assistant inspired by JARVIS, built in Python.',
@@ -59,7 +59,7 @@ export const SYSTEMS = {
         },
       },
       {
-        name: 'Argus', color: 0xe8a44a, radius: 3.8, orbitR: 79, orbitSpeed: 0.21, startAngle: Math.PI * 1.5, hasRings: true, ringColor: 0xd4b86a,
+        name: 'Argus', color: 0xe8a44a, radius: 3.8, orbitR: 79, orbitSpeed: 0.08, startAngle: Math.PI * 1.5, hasRings: true, ringColor: 0xd4b86a,
         content: {
           type: 'project', heading: 'Argus', meta: 'Python · React · FastAPI · PaySim',
           body: 'Real-time Anti-Money Laundering platform using a Graph Neural Network and Gemini AI. Scores 9M accounts for fraud risk and auto-generates Suspicious Activity Reports.',
@@ -67,7 +67,7 @@ export const SYSTEMS = {
         },
       },
       {
-        name: 'Animal Encyclopedia', color: 0x4ab87a, radius: 2.5, orbitR: 97, orbitSpeed: 0.16, startAngle: Math.PI * 0.2,
+        name: 'Animal Encyclopedia', color: 0x4ab87a, radius: 2.5, orbitR: 97, orbitSpeed: 0.06, startAngle: Math.PI * 0.2,
         content: {
           type: 'project', heading: 'Animal Encyclopedia', meta: 'Java · Swing · REST APIs',
           body: 'Desktop encyclopedia built with a team of 6. Led the search backend (entity parsing, API client, Clean Architecture interactor chain) and built several Swing UI screens.',
