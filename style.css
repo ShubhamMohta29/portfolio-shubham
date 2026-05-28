@@ -1,11 +1,11 @@
 :root {
   --ink:     #f0ede6;
   --ink-2:   #aeaaa2;
-  --ink-3:   #66635c;
-  --accent:  #e05535;
+  --ink-3:   #8a8680;
+  --accent:  #2dd4bf;
   --border:  rgba(255, 255, 255, 0.08);
-  --font-display: 'DM Serif Display', serif;
-  --font-body:    'Instrument Sans', sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'DM Sans', sans-serif;
   --font-mono:    'DM Mono', monospace;
 }
 
