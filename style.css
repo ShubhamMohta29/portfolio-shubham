@@ -322,11 +322,11 @@ body.galaxy-view #planet-labels { display: none; }
   letter-spacing: 0.07em;
   color: var(--accent);
   text-decoration: none;
-  border: 1px solid rgba(224, 85, 53, 0.38);
+  border: 1px solid rgba(45, 212, 191, 0.38);
   padding: 0.5rem 1.1rem;
   transition: background 0.2s;
 }
-.sheet-link:hover { background: rgba(224, 85, 53, 0.1); }
+.sheet-link:hover { background: rgba(45, 212, 191, 0.1); }
 
 .sheet-skills {
   display: flex;
