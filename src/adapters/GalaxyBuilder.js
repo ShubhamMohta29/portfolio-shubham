@@ -64,7 +64,7 @@ export function buildGalaxy(starTex, coreGlowTex, navStarTex) {
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   geo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
   galaxy.add(new THREE.Points(geo, new THREE.PointsMaterial({
-    size: 1.0, map: starTex, transparent: true, blending: THREE.AdditiveBlending,
+    size: 1.0, map: starTex, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending,
     depthWrite: false, vertexColors: true, sizeAttenuation: true,
   })));
 
@@ -112,7 +112,7 @@ export function buildBackground(starTex) {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
   return new THREE.Points(geo, new THREE.PointsMaterial({
-    size: 1.8, map: starTex, transparent: true, blending: THREE.AdditiveBlending,
+    size: 1.8, map: starTex, transparent: true, opacity: 0.95, blending: THREE.AdditiveBlending,
     depthWrite: false, color: 0x99aabb, sizeAttenuation: true,
   }));
 }
@@ -125,7 +125,7 @@ export function buildDistantGalaxies() {
     [215, 200, 255],
     [245, 255, 250],
   ];
-  return Array.from({ length: 45 }, (_, i) => {
+  return Array.from({ length: 70 }, (_, i) => {
     const col    = GCOLS[i % GCOLS.length];
     const aRatio = 0.22 + Math.random() * 0.58;
     const sp     = new THREE.Sprite(new THREE.SpriteMaterial({
