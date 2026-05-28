@@ -7,7 +7,7 @@ import { makeDistantGalaxyTex } from './TextureFactory.js';
 export function buildGalaxy(starTex, coreGlowTex, navStarTex) {
   const galaxy = new THREE.Group();
 
-  const ARMS = 2, ARM_N = 9000, CORE_N = 2700, HALO_N = 2000, MAX_R = 110, WINDINGS = 2.2;
+  const ARMS = 2, ARM_N = 9000, CORE_N = 2700, HALO_N = 0, MAX_R = 110, WINDINGS = 2.2;
   const total = ARMS * ARM_N + CORE_N + HALO_N;
   const pos   = new Float32Array(total * 3);
   const col   = new Float32Array(total * 3);
