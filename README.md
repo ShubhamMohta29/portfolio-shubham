@@ -33,18 +33,6 @@ An interactive 3D galaxy portfolio where each section of the site is a stellar s
 
 [portfolio-shubham-gilt.vercel.app](https://portfolio-shubham-gilt.vercel.app)
 
-## Running Locally
-
-Requires a local server (ES modules don't work over `file://`):
-
-```bash
-git clone https://github.com/ShubhamMohta29/portfolio-shubham.git
-cd portfolio-shubham
-npx serve .
-```
-
-Then open `http://localhost:3000` in your browser.
-
 ## Author
 
 **Shubham Mohta**
