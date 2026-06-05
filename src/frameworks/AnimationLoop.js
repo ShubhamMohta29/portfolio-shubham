@@ -2,17 +2,18 @@
 
 import * as THREE from 'three';
 import { BASE_PHI } from './CameraController.js';
-import { updateNavLabels, updatePlanetLabels } from '../adapters/LabelAdapter.js';
+import { updateNavLabels, updatePlanetLabels, updatePlanetSidebar } from '../adapters/LabelAdapter.js';
 
 export function createAnimationLoop({
   renderer, scene, camera,
   galaxy, navSprites, navHitMeshes,
   mouseTracker, navigationUseCase, raycaster, clock,
-  positionCamera,
+  positionCamera, getFocusedPlanetIdx,
 }) {
   let lastT            = 0;
   let hoveredNavIdx    = -1;
   let hoveredPlanetIdx = -1;
+  let firstFrame       = true;
 
   function updateNavHover() {
     const mouse2D = mouseTracker.getMouse2D();
@@ -26,7 +27,7 @@ export function createAnimationLoop({
 
   function updatePlanetHover() {
     const currentSys = navigationUseCase.currentSys;
-    if (!currentSys) return;
+    if (!currentSys) return -1;
     const meshes  = currentSys.planetObjs.map(p => p.mesh);
     const mouse2D = mouseTracker.getMouse2D();
     raycaster.setFromCamera(mouse2D, camera);
@@ -35,18 +36,30 @@ export function createAnimationLoop({
     hoveredPlanetIdx = hits.length > 0 ? meshes.indexOf(hits[0].object) : -1;
     if (hoveredPlanetIdx !== prev)
       document.body.style.cursor = hoveredPlanetIdx >= 0 ? 'pointer' : '';
+
+    const focused      = getFocusedPlanetIdx ? getFocusedPlanetIdx() : -1;
+    const effectiveIdx = hoveredPlanetIdx >= 0 ? hoveredPlanetIdx : focused;
+
     currentSys.planetObjs.forEach((p, i) => {
-      const hov    = hoveredPlanetIdx === i ? 1 : 0;
+      const hov    = effectiveIdx === i ? 1 : 0;
       const tScale = 1.0 + hov * 0.28;
       p.mesh.scale.x += (tScale - p.mesh.scale.x) * 0.12;
       p.mesh.scale.y  = p.mesh.scale.z = p.mesh.scale.x;
       p.mesh.material.emissiveIntensity +=
         ((0.55 + hov * 0.40) - p.mesh.material.emissiveIntensity) * 0.12;
     });
+
+    return focused; // sidebar tracks keyboard focus only
   }
 
   function tick() {
     requestAnimationFrame(tick);
+
+    if (firstFrame) {
+      firstFrame = false;
+      document.getElementById('loader')?.classList.add('done');
+    }
+
     const t  = clock.getElapsedTime();
     const dt = Math.min(t - lastT, 0.05);
     lastT = t;
@@ -89,8 +102,10 @@ export function createAnimationLoop({
         sys.camRadius * navigationUseCase.stellarEntryZoom,
       );
 
-      updatePlanetLabels(currentSys, hoveredPlanetIdx, camera);
-      updatePlanetHover();
+      const focusedIdx = updatePlanetHover();
+      const effectiveForLabel = hoveredPlanetIdx >= 0 ? hoveredPlanetIdx : focusedIdx;
+      updatePlanetLabels(currentSys, effectiveForLabel, camera);
+      updatePlanetSidebar(focusedIdx);
     }
 
     renderer.render(scene, camera);

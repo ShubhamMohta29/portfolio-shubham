@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Shubham Mohta | Portfolio</title>
+  <meta name="description" content="Interactive 3D galaxy portfolio by Shubham Mohta — CS &amp; Astrophysics at University of Toronto.">
+  <meta property="og:title" content="Shubham Mohta | Portfolio">
+  <meta property="og:description" content="Interactive 3D galaxy portfolio. Navigate the stars to explore projects, skills, and contact info.">
+  <meta property="og:image" content="https://portfolio-shubham-gilt.vercel.app/profile.jpg">
+  <meta property="og:url" content="https://portfolio-shubham-gilt.vercel.app">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shubham Mohta | Portfolio">
+  <meta name="twitter:description" content="Interactive 3D galaxy portfolio. Navigate the stars to explore projects, skills, and contact info.">
+  <meta name="twitter:image" content="https://portfolio-shubham-gilt.vercel.app/profile.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
@@ -13,6 +23,14 @@
   </script>
 </head>
 <body class="galaxy-view">
+
+  <!-- Loading screen — removed on first rendered frame -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-ring"></div>
+      <p class="loader-text">initialising</p>
+    </div>
+  </div>
 
   <canvas id="bg"></canvas>
 
@@ -28,15 +46,17 @@
   </div>
 
   <!-- Nav star labels (JS positions these each frame) -->
-  <div class="star-label" id="label-about"    data-page="about">About</div>
-  <div class="star-label" id="label-projects" data-page="projects">Projects</div>
-  <div class="star-label" id="label-contact"  data-page="contact">Contact</div>
-  <div class="star-label" id="label-resume"   data-page="resume">Résumé</div>
+  <div class="star-label" id="label-about"      data-page="about">About</div>
+  <div class="star-label" id="label-projects"  data-page="projects">Projects</div>
+  <div class="star-label" id="label-contact"   data-page="contact">Contact</div>
+  <div class="star-label" id="label-resume"    data-page="resume">Résumé</div>
+  <div class="star-label" id="label-experience" data-page="experience">Experience</div>
 
   <!-- ── Stellar system HUD ── -->
   <button class="stellar-back" id="stellar-back">← galaxy</button>
   <p class="stellar-title"    id="stellar-title"></p>
   <p class="stellar-hint">click a planet to explore</p>
+  <p class="stellar-kbd-hint">← → cycle planets · enter to open</p>
 
   <!-- Planet labels (created dynamically by JS) -->
   <div id="planet-labels"></div>
@@ -68,6 +88,50 @@
           <span>SQL</span><span>React</span><span>FastAPI</span><span>Three.js</span>
           <span>Graph Neural Networks</span><span>LLM Integration</span>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Experience / timeline page ── -->
+  <div id="experience-page">
+    <div class="exp-scroll">
+      <div class="exp-inner">
+        <p class="exp-eyebrow">Timeline</p>
+        <h2 class="exp-heading">Experience</h2>
+        <ol class="exp-timeline">
+          <li class="exp-entry">
+            <span class="exp-year">2023</span>
+            <div class="exp-marker"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div class="exp-body">
+              <h3>University of Toronto</h3>
+              <p>B.Sc. Computer Science &amp; Astrophysics · Math Minor · 2023 – present</p>
+            </div>
+          </li>
+          <li class="exp-entry">
+            <span class="exp-year">2024</span>
+            <div class="exp-marker"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div class="exp-body">
+              <h3>H.A.D.E.S.</h3>
+              <p>Built a fully voice-activated AI assistant in Python with GROQ AI — real-time speech recognition, intent dispatch, and TTS response.</p>
+            </div>
+          </li>
+          <li class="exp-entry">
+            <span class="exp-year">2024</span>
+            <div class="exp-marker"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div class="exp-body">
+              <h3>GenAI Hackathon — Argus</h3>
+              <p>Real-time Anti-Money Laundering platform using a Graph Neural Network and Gemini AI. Scored 9M accounts for fraud risk and auto-generated Suspicious Activity Reports.</p>
+            </div>
+          </li>
+          <li class="exp-entry">
+            <span class="exp-year">2025</span>
+            <div class="exp-marker"><div class="exp-dot"></div><div class="exp-line"></div></div>
+            <div class="exp-body">
+              <h3>This Portfolio</h3>
+              <p>Built from scratch — 3D interactive galaxy with spiral arms, stellar navigation, and planetary detail sheets. No bundler, no framework.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </div>
   </div>

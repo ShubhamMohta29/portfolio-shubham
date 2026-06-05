@@ -101,13 +101,17 @@ setupClickHandler({
   getViewState:  () => navigationUseCase.viewState,
 });
 
-setupKeyboardHandler({ navigationUseCase, planetInteractionUseCase, pdfModal });
+const { getFocusedPlanetIdx, resetFocus } = setupKeyboardHandler({
+  navigationUseCase, planetInteractionUseCase, pdfModal,
+  getCurrentSys: () => navigationUseCase.currentSys,
+});
 setupResizeHandler(camera, renderer);
 
 // ── UI button wiring ──────────────────────────────────────────────────────────
 document.getElementById('stellar-back').addEventListener('click', () => {
   planetInteractionUseCase.closePDF();
   planetInteractionUseCase.closePlanetSheet();
+  resetFocus();
   navigationUseCase.goToGalaxy();
 });
 
@@ -129,4 +133,5 @@ createAnimationLoop({
   galaxy, navSprites, navHitMeshes,
   mouseTracker, navigationUseCase, raycaster, clock,
   positionCamera: (theta, phi, r) => positionCamera(camera, theta, phi, r),
+  getFocusedPlanetIdx,
 }).start();

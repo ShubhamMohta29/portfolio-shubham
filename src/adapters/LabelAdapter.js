@@ -68,6 +68,12 @@ export function clearPlanetSidebar() {
   if (sidebar) sidebar.innerHTML = '';
 }
 
+export function updatePlanetSidebar(kbFocusIdx) {
+  document.querySelectorAll('.sidebar-item').forEach((el, i) => {
+    el.classList.toggle('kb-focus', i === kbFocusIdx);
+  });
+}
+
 export function updatePlanetLabels(currentSys, hoveredPlanetIdx, camera) {
   if (!currentSys) return;
   currentSys.planetObjs.forEach((p, i) => {

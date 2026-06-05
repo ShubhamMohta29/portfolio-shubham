@@ -104,6 +104,12 @@ export const SYSTEMS = {
     ],
   },
 
+  experience: {
+    title: 'Experience', viewType: 'page',
+    starColor: 0xffcc88, glowColor: 0xffaa44, starRadius: 7, camRadius: 120,
+    planets: [],
+  },
+
   resume: {
     title: 'Résumé', starColor: 0xddeeff, glowColor: 0xaaccff, starRadius: 7, camRadius: 118,
     planets: [
