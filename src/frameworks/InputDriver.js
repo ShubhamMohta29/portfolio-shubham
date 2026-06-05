@@ -16,7 +16,10 @@ export function createMouseTracker() {
 
   window.addEventListener('mousemove', e => setFromClient(e.clientX, e.clientY));
   window.addEventListener('touchmove', e => {
-    if (e.touches.length === 1) setFromClient(e.touches[0].clientX, e.touches[0].clientY);
+    if (e.touches.length !== 1) return;
+    const t = e.touches[0];
+    if (t.target.closest('.planet-sheet, #experience-page, #about-page, #pdf-modal')) return;
+    setFromClient(t.clientX, t.clientY);
   }, { passive: true });
 
   return {

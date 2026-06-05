@@ -314,6 +314,9 @@ body.galaxy-view #planet-labels { display: none; }
   transition: transform 0.52s cubic-bezier(0.16, 1, 0.3, 1);
   max-height: 55vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 .planet-sheet.active { transform: translateY(0); }
 .planet-sheet::-webkit-scrollbar { width: 3px; }
@@ -613,6 +616,9 @@ body.sheet-open #planet-sidebar   { opacity: 0.25; pointer-events: none; }
 .exp-scroll {
   max-height: 100vh;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
   padding: 5rem 2rem 4rem;
   width: 100%;
   max-width: 560px;
