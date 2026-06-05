@@ -11,7 +11,7 @@ export const SYSTEMS = {
         name: 'Background', color: 0x4488cc, radius: 3.5, orbitR: 30, orbitSpeed: 0.38, startAngle: 0,
         content: {
           type: 'info', heading: 'Background',
-          body: "2nd year CS & Astrophysics double major at the University of Toronto.\nPassionate about AI systems, algorithm design, and the physics of the cosmos.",
+          body: "CS & Astrophysics (Math minor) at U of T — Dean's Honour List, $50K Merit Award, 3.45 GPA.\nIT infrastructure intern at First Technology KZN (2025). Astronomy representative.",
         },
       },
       {
@@ -25,7 +25,7 @@ export const SYSTEMS = {
         name: 'Interests', color: 0x9955dd, radius: 2.8, orbitR: 70, orbitSpeed: 0.20, startAngle: Math.PI * 1.4,
         content: {
           type: 'info', heading: 'Interests',
-          body: "Astrophysics · Computational methods in physics · AI systems\nAlgorithm design · Building tools that solve real problems.",
+          body: "AI systems · Astrophysics · Computational methods in physics\nAlgorithm design · Dance · Basketball · Padel",
         },
       },
     ],
@@ -34,14 +34,6 @@ export const SYSTEMS = {
   projects: {
     title: 'Projects', starColor: 0x99ccff, glowColor: 0x5588ee, starRadius: 8, camRadius: 170,
     planets: [
-      {
-        name: 'Sudoku Solver', color: 0xb8a898, radius: 2.8, orbitR: 30, orbitSpeed: 0.18, startAngle: 0,
-        content: {
-          type: 'project', heading: 'Sudoku Solver', meta: 'Python',
-          body: 'Backtracking solver with constraint propagation and MRV heuristic — significantly faster than naive approaches on real puzzles.',
-          url: 'https://github.com/ShubhamMohta29/sudoku-solver',
-        },
-      },
       {
         name: 'Portfolio', color: 0x3a8fd4, radius: 2.5, orbitR: 46, orbitSpeed: 0.13, startAngle: Math.PI * 0.4,
         content: {
@@ -67,11 +59,11 @@ export const SYSTEMS = {
         },
       },
       {
-        name: 'Animal Encyclopedia', color: 0x4ab87a, radius: 2.5, orbitR: 97, orbitSpeed: 0.06, startAngle: Math.PI * 0.2,
+        name: 'RealmForge', color: 0xe8a44a, radius: 3.8, orbitR: 79, orbitSpeed: 0.08, startAngle: Math.PI * 1.5, hasRings: true, ringColor: 0xd4b86a,
         content: {
-          type: 'project', heading: 'Animal Encyclopedia', meta: 'Java · Swing · REST APIs',
-          body: 'Desktop encyclopedia built with a team of 6. Led the search backend (entity parsing, API client, Clean Architecture interactor chain) and built several Swing UI screens.',
-          url: 'https://github.com/ShubhamMohta29/AnimalEncyclopedia.git',
+          type: 'project', heading: 'RealmForge', meta: 'TypeScript · GROQ AI · Next.js · React · Tailwind CSS · Supabase',
+          body: 'DnD-5e web app that allows for multiplayer campaigns and also single-player adventures with an AI Dungeon Master.',
+          url: 'https://github.com/ShubhamMohta29/RealmForge.git',
         },
       },
     ],
