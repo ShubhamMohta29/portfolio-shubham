@@ -59,7 +59,7 @@ export const SYSTEMS = {
         },
       },
       {
-        name: 'RealmForge', color: 0xe8a44a, radius: 3.8, orbitR: 79, orbitSpeed: 0.08, startAngle: Math.PI * 1.5, hasRings: true, ringColor: 0xd4b86a,
+        name: 'RealmForge', color: 0x8a5cd6, radius: 3.4, orbitR: 96, orbitSpeed: 0.06, startAngle: Math.PI * 0.1, hasRings: true, ringColor: 0xb79ae8,
         content: {
           type: 'project', heading: 'RealmForge', meta: 'TypeScript · GROQ AI · Next.js · React · Tailwind CSS · Supabase',
           body: 'DnD-5e web app that allows for multiplayer campaigns and also single-player adventures with an AI Dungeon Master.',
